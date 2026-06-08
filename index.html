@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Site Fluminense</title>
 
+  <!-- Bootstrap PRIMEIRO — nosso CSS vem depois e vence -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
+  <!-- Nosso CSS por último — sobrescreve o Bootstrap -->
   <link rel="stylesheet" href="Mod.css">
 
+  <!-- Aplica tema salvo ANTES de renderizar (evita flash) -->
   <script>
     (function() {
       var tema = localStorage.getItem('flu-tema') || 'escuro';
@@ -298,10 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
             Nas Laranjeiras, nasceu uma paixão que atravessa gerações.
           </p>
           <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden my-5">
-            <video controls>
-              <source src="Video/his.flu.mp4" type="video/mp4">
-              <track kind="subtitles" srclang="pt-BR" src="Legenda/His. Fluminense.vtt" label="portugues">
-            </video>
+            <iframe src="https://www.youtube.com/embed/owg2fiMZJsE" title="História do Fluminense FC" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
           </div>
         </div>
       </section>
