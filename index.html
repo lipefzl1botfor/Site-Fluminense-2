@@ -192,6 +192,19 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </section>
 
+      <!-- ✅ FUNCIONALIDADE: Curiosidades Aleatórias -->
+      <section class="row justify-content-center mb-4">
+        <div class="col-lg-8">
+          <div class="card shadow-sm text-center p-4" id="card-curiosidade">
+            <p class="small mb-1" style="color:var(--flu-ouro);letter-spacing:2px;text-transform:uppercase;font-family:sans-serif;">Você sabia?</p>
+            <p class="fw-bold fs-5 mb-3" id="texto-curiosidade" style="color:var(--flu-texto);font-family:Georgia,serif;min-height:3rem;">
+              O Fluminense foi o primeiro clube a introduzir o futebol no estado do Rio de Janeiro, em 1902.
+            </p>
+            <button class="btn btn-socio fw-bold px-4" id="btn-curiosidade">🎲 Nova Curiosidade</button>
+          </div>
+        </div>
+      </section>
+
       <section class="row g-5 py-4">
         <div class="col-md-6">
           <h3 class="fw-bold">Fidalguia e Tradição</h3>
@@ -248,20 +261,23 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="card-body d-flex flex-column">
               <h4 class="fw-bold text-center">Seja Sócio</h4>
               <p class="small text-center">Faça parte da história do Fluminense.</p>
-              <form id="formSocio" class="mt-2">
+              <form id="formSocio" class="mt-2" novalidate>
                 <div class="mb-2">
-                  <input type="text" class="form-control form-control-sm" id="nomeSocio" placeholder="Nome completo" required>
+                  <input type="text" class="form-control form-control-sm" id="nomeSocio" placeholder="Nome completo">
+                  <div class="invalid-feedback" id="erro-nome"></div>
                 </div>
                 <div class="mb-2">
-                  <input type="email" class="form-control form-control-sm" id="emailSocio" placeholder="Seu melhor e-mail" required>
+                  <input type="email" class="form-control form-control-sm" id="emailSocio" placeholder="Seu melhor e-mail">
+                  <div class="invalid-feedback" id="erro-email"></div>
                 </div>
                 <div class="mb-3">
                   <select class="form-select form-select-sm" id="planoSocio">
-                    <option selected disabled>Escolha um plano</option>
+                    <option selected disabled value="">Escolha um plano</option>
                     <option value="guerreiro">Guerreiro</option>
                     <option value="arquibancada">Arquibancada 100%</option>
                     <option value="maraca">Check-in Maracanã</option>
                   </select>
+                  <div class="invalid-feedback" id="erro-plano"></div>
                 </div>
                 <button type="submit" class="btn btn-socio w-100 fw-bold py-2">ENVIAR INTERESSE</button>
               </form>
@@ -380,37 +396,42 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="text-center mb-5">
         <h2 class="fw-bold sub-titulo display-5">Galeria de Imortais</h2>
         <p>Os heróis que escreveram a história tricolor</p>
+        <!-- ✅ FUNCIONALIDADE: Busca por palavra-chave -->
+        <div class="d-flex justify-content-center mt-3">
+          <input type="text" id="busca-idolos" class="form-control" placeholder="🔍 Buscar ídolo..." style="max-width:300px;">
+        </div>
+        <p id="busca-nenhum" class="mt-3 d-none" style="color:var(--flu-texto-muted);font-style:italic;">Nenhum ídolo encontrado.</p>
       </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center" id="grid-idolos">
+        <div class="col idolo-item" data-nome="castilho goleiro"><div class="card h-100 shadow-sm card-idolo">
           <img src="Image/ìdolos/Castilho,_1956.tif.jpg" class="card-img-top" alt="Castilho">
           <div class="card-body text-center"><h5 class="card-title fw-bold">Castilho</h5><p class="card-text small">O goleiro que amputou um dedo pelo Flu.</p></div>
         </div></div>
-        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+        <div class="col idolo-item" data-nome="fred capitão artilheiro"><div class="card h-100 shadow-sm card-idolo">
           <img src="Image/ìdolos/Fred_2022.jpg" class="card-img-top" alt="Fred">
           <div class="card-body text-center"><h5 class="card-title fw-bold">Fred</h5><p class="card-text small">O eterno capitão e maior artilheiro profissional.</p></div>
         </div></div>
-        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+        <div class="col idolo-item" data-nome="assis washington casal 20"><div class="card h-100 shadow-sm card-idolo">
           <img src="Image/ìdolos/Assis e Washington.jpg" class="card-img-top" alt="Assis e Washington">
           <div class="card-body text-center"><h5 class="card-title fw-bold">Assis e Washington</h5><p class="card-text small">O Casal 20 e os heróis dos anos 80.</p></div>
         </div></div>
-        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+        <div class="col idolo-item" data-nome="conca craque argentino"><div class="card h-100 shadow-sm card-idolo">
           <img src="Image/ìdolos/Conca-fluminense_(cropped).jpg" class="card-img-top" alt="Conca">
           <div class="card-body text-center"><h5 class="card-title fw-bold">Conca</h5><p class="card-text small">O craque que jogou as 38 partidas em 2010.</p></div>
         </div></div>
-        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+        <div class="col idolo-item" data-nome="german cano rei america libertadores"><div class="card h-100 shadow-sm card-idolo">
           <img src="Image/ìdolos/German_Cano_Fluminense.jpg" class="card-img-top" alt="Germán Cano">
           <div class="card-body text-center"><h5 class="card-title fw-bold">Germán Cano</h5><p class="card-text small">Faz o L! O Rei da América de 2023.</p></div>
         </div></div>
-        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+        <div class="col idolo-item" data-nome="rivelino maquina tricolor"><div class="card h-100 shadow-sm card-idolo">
           <img src="Image/ìdolos/Rivelino_(1971).tif.jpg" class="card-img-top" alt="Rivelino">
           <div class="card-body text-center"><h5 class="card-title fw-bold">Rivelino</h5><p class="card-text small">O Reizinho da Máquina Tricolor.</p></div>
         </div></div>
-        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+        <div class="col idolo-item" data-nome="pinheiro defesa xerife"><div class="card h-100 shadow-sm card-idolo">
           <img src="Image/ìdolos/Pinheiro,_Estadio,_1954-03-13_(565).jpg" class="card-img-top" alt="Pinheiro">
           <div class="card-body text-center"><h5 class="card-title fw-bold">Pinheiro</h5><p class="card-text small">O xerife eterno da defesa tricolor.</p></div>
         </div></div>
-        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+        <div class="col idolo-item" data-nome="thiago silva monstro xerem defensor"><div class="card h-100 shadow-sm card-idolo">
           <img src="Image/ìdolos/2021_FIFA_Club_World_Cup_Final_-_14.jpg_(non-blurred_version)_(Thiago_Silva_em_2021).jpg" class="card-img-top" alt="Thiago Silva">
           <div class="card-body text-center"><h5 class="card-title fw-bold">Thiago Silva</h5><p class="card-text small">O Monstro. Orgulho de Xerém.</p></div>
         </div></div>
@@ -513,6 +534,205 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   });
+</script>
+
+<!-- ============================================================
+     JAVASCRIPT — FUNCIONALIDADES INTERATIVAS
+     ============================================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  /* ────────────────────────────────────────────────────────────
+     1. CURIOSIDADES ALEATÓRIAS
+     ──────────────────────────────────────────────────────────── */
+  var curiosidades = [
+    'O Fluminense foi o primeiro clube a introduzir o futebol no estado do Rio de Janeiro, em 1902.',
+    'O nome "Fluminense" vem do latim "fluminensis", que significa "natural do Rio de Janeiro".',
+    'A torcida tricolor é conhecida como "Pó de Arroz" — apelido que surgiu de um episódio histórico de 1914.',
+    'O Estádio das Laranjeiras é o mais antigo da América do Sul ainda em uso por um clube de futebol.',
+    'Fred marcou mais de 200 gols com a camisa tricolor, tornando-se o maior artilheiro da história do Flu.',
+    'Germán Cano foi o artilheiro da Libertadores 2023, com 11 gols, conquistando o título inédito.',
+    'O Fluminense foi campeão brasileiro em 1970, 1984, 1985 e 2012.',
+    'Thiago Silva, o "Monstro", foi formado nas categorias de base do Fluminense em Xerém.',
+    'O Fluminense venceu a Recopa Sul-Americana de 2024 contra o LDU do Equador.',
+    'Conca foi o único jogador a disputar todas as 38 rodadas do Brasileirão 2010 sem ser substituído.',
+    'O Maracanã foi inaugurado em 1950 e é o estádio principal do Fluminense desde os anos 70.',
+    'Rivelino foi um dos grandes nomes da Máquina Tricolor dos anos 70, campeão brasileiro em 1970.',
+    'A Libertadores de 2023 foi o título internacional mais importante da história do clube.',
+    'O Fluminense é um dos quatro clubes que nunca foram rebaixados para a Série B no Brasil.',
+    'O hino oficial do Fluminense foi composto em 1942 e continua sendo cantado até hoje.'
+  ];
+  var idxAtual = -1;
+  var btnCuriosidade = document.getElementById('btn-curiosidade');
+  var textoCuriosidade = document.getElementById('texto-curiosidade');
+
+  if (btnCuriosidade) {
+    btnCuriosidade.addEventListener('click', function() {
+      var novo;
+      do { novo = Math.floor(Math.random() * curiosidades.length); } while (novo === idxAtual);
+      idxAtual = novo;
+      textoCuriosidade.style.opacity = '0';
+      textoCuriosidade.style.transition = 'opacity 0.3s';
+      setTimeout(function() {
+        textoCuriosidade.textContent = curiosidades[idxAtual];
+        textoCuriosidade.style.opacity = '1';
+      }, 300);
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     2. VALIDAÇÃO DO FORMULÁRIO DE SÓCIO
+     ──────────────────────────────────────────────────────────── */
+  var formSocio = document.getElementById('formSocio');
+  if (formSocio) {
+    formSocio.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var valido = true;
+
+      var nome = document.getElementById('nomeSocio');
+      var erroNome = document.getElementById('erro-nome');
+      if (!nome.value.trim() || nome.value.trim().length < 3) {
+        nome.classList.add('is-invalid');
+        erroNome.textContent = 'Digite seu nome completo (mínimo 3 letras).';
+        valido = false;
+      } else {
+        nome.classList.remove('is-invalid');
+        nome.classList.add('is-valid');
+      }
+
+      var email = document.getElementById('emailSocio');
+      var erroEmail = document.getElementById('erro-email');
+      var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!regexEmail.test(email.value.trim())) {
+        email.classList.add('is-invalid');
+        erroEmail.textContent = 'Digite um e-mail válido.';
+        valido = false;
+      } else {
+        email.classList.remove('is-invalid');
+        email.classList.add('is-valid');
+      }
+
+      var plano = document.getElementById('planoSocio');
+      var erroPlano = document.getElementById('erro-plano');
+      if (!plano.value) {
+        plano.classList.add('is-invalid');
+        erroPlano.textContent = 'Selecione um plano.';
+        valido = false;
+      } else {
+        plano.classList.remove('is-invalid');
+        plano.classList.add('is-valid');
+      }
+
+      if (valido) {
+        var msg = document.getElementById('msgSucesso');
+        msg.classList.remove('d-none');
+        msg.textContent = 'Saudações Tricolores, ' + nome.value.trim() + '! Entraremos em contato em breve. 🏆';
+        formSocio.reset();
+        [nome, email, plano].forEach(function(el) {
+          el.classList.remove('is-valid', 'is-invalid');
+        });
+        setTimeout(function() { msg.classList.add('d-none'); }, 5000);
+      }
+    });
+
+    // Limpa erro ao digitar
+    ['nomeSocio','emailSocio','planoSocio'].forEach(function(id) {
+      document.getElementById(id).addEventListener('input', function() {
+        this.classList.remove('is-invalid');
+      });
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     3. BUSCA POR PALAVRA-CHAVE — ÍDOLOS
+     ──────────────────────────────────────────────────────────── */
+  var buscaInput = document.getElementById('busca-idolos');
+  var buscaNenhum = document.getElementById('busca-nenhum');
+  if (buscaInput) {
+    buscaInput.addEventListener('input', function() {
+      var termo = this.value.trim().toLowerCase();
+      var itens = document.querySelectorAll('.idolo-item');
+      var encontrou = false;
+      itens.forEach(function(item) {
+        var dados = item.getAttribute('data-nome').toLowerCase();
+        var nome = item.querySelector('.card-title').textContent.toLowerCase();
+        if (!termo || dados.includes(termo) || nome.includes(termo)) {
+          item.style.display = '';
+          encontrou = true;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      buscaNenhum.classList.toggle('d-none', encontrou || !termo);
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     4. ANIMAÇÃO AO SCROLL (Intersection Observer)
+     ──────────────────────────────────────────────────────────── */
+  var estilo = document.createElement('style');
+  estilo.textContent = `
+    .scroll-oculto { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .scroll-visivel { opacity: 1 !important; transform: translateY(0) !important; }
+  `;
+  document.head.appendChild(estilo);
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('scroll-visivel');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  function ativarScrollAnim() {
+    document.querySelectorAll(
+      '.card, .timeline-content, .texto-flu, .ratio, #card-curiosidade'
+    ).forEach(function(el) {
+      if (!el.classList.contains('scroll-oculto')) {
+        el.classList.add('scroll-oculto');
+        observer.observe(el);
+      }
+    });
+  }
+
+  // Ativa ao carregar e sempre que uma aba muda
+  ativarScrollAnim();
+  document.querySelectorAll('[data-bs-toggle="pill"]').forEach(function(btn) {
+    btn.addEventListener('shown.bs.tab', function() {
+      setTimeout(ativarScrollAnim, 50);
+    });
+  });
+
+  /* ────────────────────────────────────────────────────────────
+     5. DESTAQUE DE ÍDOLO SELECIONADO (clique no card)
+     ──────────────────────────────────────────────────────────── */
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.card-idolo');
+    if (!card) return;
+    var jaSelecionado = card.classList.contains('idolo-selecionado');
+    document.querySelectorAll('.card-idolo').forEach(function(c) {
+      c.classList.remove('idolo-selecionado');
+    });
+    if (!jaSelecionado) card.classList.add('idolo-selecionado');
+  });
+
+  var estiloIdolo = document.createElement('style');
+  estiloIdolo.textContent = `
+    .card-idolo { cursor: pointer; }
+    .card-idolo.idolo-selecionado {
+      border: 2px solid var(--flu-ouro) !important;
+      box-shadow: 0 0 0 4px rgba(255,215,0,0.2), 0 12px 32px rgba(0,0,0,0.5) !important;
+      transform: scale(1.05);
+    }
+    .card-idolo.idolo-selecionado .card-title::after {
+      content: ' ⭐';
+    }
+  `;
+  document.head.appendChild(estiloIdolo);
+
+});
 </script>
 
 </body>

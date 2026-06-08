@@ -572,3 +572,41 @@ footer p {
 
 [data-tema="claro"] .shadow-sm { box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important; }
 [data-tema="claro"] .shadow-lg { box-shadow: 0 10px 42px rgba(0,0,0,0.18) !important; }
+
+/* ============================================
+   VALIDAÇÃO DE FORMULÁRIO
+   ============================================ */
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: var(--flu-vinho) !important;
+  background-image: none !important;
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+  border-color: var(--flu-verde) !important;
+  background-image: none !important;
+}
+
+.invalid-feedback {
+  color: #e06a82 !important;
+  font-size: 0.78rem;
+  text-align: left;
+  display: block;
+  min-height: 1.1em;
+}
+
+[data-tema="claro"] .invalid-feedback {
+  color: var(--flu-vinho) !important;
+}
+
+/* ============================================
+   CURIOSIDADE — transição de texto
+   ============================================ */
+#texto-curiosidade {
+  transition: opacity 0.3s ease;
+  min-height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
