@@ -1,22 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Fluminense</title>
-    <link rel="stylesheet" href="Mod.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Fluminense</title>
+
+  <!-- ✅ Bootstrap PRIMEIRO — nosso CSS vem depois e vence -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+  <!-- ✅ Nosso CSS por último — sobrescreve o Bootstrap -->
+  <link rel="stylesheet" href="Mod.css">
+
+  <!-- ✅ Aplica tema salvo ANTES de renderizar (evita flash) -->
+  <script>
+    (function() {
+      var tema = localStorage.getItem('flu-tema') || 'escuro';
+      if (tema === 'claro') document.documentElement.setAttribute('data-tema', 'claro');
+    })();
+  </script>
 </head>
 <body>
 
+<!-- ============================================================
+     SPLASH SCREEN
+     ============================================================ -->
+<div id="splash-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:linear-gradient(160deg,#003d20 0%,#001a0e 50%,#5a0e1e 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(-55deg,transparent,transparent 60px,rgba(255,255,255,0.025) 60px,rgba(255,255,255,0.025) 62px);"></div>
+  <div style="position:relative;text-align:center;padding:3rem 2.5rem;max-width:460px;width:90%;">
+    <div style="width:110px;height:110px;border-radius:50%;border:3px solid rgba(255,215,0,0.4);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;background:rgba(0,0,0,0.3);">
+      <img src="Image/Escudo-Fluminense.png" alt="Escudo" style="width:70px;">
+    </div>
+    <p style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,215,0,0.7);margin-bottom:0.5rem;font-family:sans-serif;">Portal Oficial</p>
+    <h1 style="font-size:2rem;font-weight:bold;color:#fff;line-height:1.2;margin-bottom:0.4rem;">Bem-vindo ao <span style="color:#ffd700;">Fluminense FC</span></h1>
+    <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);font-family:sans-serif;margin-bottom:2rem;font-style:italic;">Desde 1902, o clube de todos os tricolores</p>
+    <div style="display:flex;gap:0;border-radius:50px;overflow:hidden;border:1.5px solid rgba(255,215,0,0.5);background:rgba(0,0,0,0.4);">
+      <input id="splashNome" type="text" placeholder="Digite seu nome para entrar..." maxlength="40"
+        style="flex:1;background:transparent;border:none;outline:none;padding:0.8rem 1.2rem;color:#fff;font-size:0.9rem;font-family:sans-serif;">
+      <button id="splashBtn" style="background:#006437;color:#fff;border:none;padding:0 1.5rem;font-weight:bold;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:sans-serif;">ENTRAR ▶</button>
+    </div>
+    <p id="splashMsg" style="margin-top:1rem;font-size:0.9rem;color:#ffd700;font-family:sans-serif;font-style:italic;min-height:1.4em;"></p>
+    <div style="display:flex;align-items:center;gap:12px;margin:1.2rem 0;">
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.15);"></div>
+      <span style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);font-family:sans-serif;text-transform:uppercase;">fundado em 1902</span>
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.15);"></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <span style="border:1px solid rgba(0,100,55,0.6);color:#5dca8a;background:rgba(0,100,55,0.2);border-radius:20px;padding:4px 12px;font-size:11px;font-family:sans-serif;">Libertadores 2023</span>
+      <span style="border:1px solid rgba(133,40,61,0.6);color:#e06a82;background:rgba(133,40,61,0.2);border-radius:20px;padding:4px 12px;font-size:11px;font-family:sans-serif;">4× Brasileirão</span>
+      <span style="border:1px solid rgba(255,215,0,0.4);color:#ffd700;background:rgba(255,215,0,0.1);border-radius:20px;padding:4px 12px;font-size:11px;font-family:sans-serif;">33× Carioca</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var btn = document.getElementById('splashBtn');
+    var input = document.getElementById('splashNome');
+    var msg = document.getElementById('splashMsg');
+    var overlay = document.getElementById('splash-overlay');
+    function entrar() {
+      var nome = input.value.trim();
+      if (!nome) { msg.style.color='#e06a82'; msg.textContent='Por favor, digite seu nome para continuar.'; return; }
+      msg.style.color='#ffd700'; msg.textContent='Olá, '+nome+'! Bem-vindo ao Portal Tricolor 🏆';
+      setTimeout(function(){ overlay.style.transition='opacity 0.6s'; overlay.style.opacity='0'; setTimeout(function(){ overlay.style.display='none'; },600); },1200);
+    }
+    btn.addEventListener('click', entrar);
+    input.addEventListener('keydown', function(e){ if(e.key==='Enter') entrar(); });
+  })();
+</script>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
 <nav class="navbar navbar-expand-md navbar-dark custom-nav shadow-sm sticky-top">
   <div class="container">
-    <a class="navbar-brand d-flex align-items-center" style="cursor: pointer;">
+    <a class="navbar-brand d-flex align-items-center" style="cursor:pointer;">
       <img src="Image/Escudo-Fluminense.png" id="escudoFLU" alt="Logo Fluminense" width="40" class="me-2">
       <span class="fw-bold">FLUMINENSE FC</span>
     </a>
-    
+
     <audio id="hinoFlu">
       <source src="Audio/hino-fluminense-fc.mp3" type="audio/mpeg">
     </audio>
@@ -28,439 +91,427 @@
     <div class="collapse navbar-collapse" id="navFlu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-pills" id="pills-tab" role="tablist">
         <li class="nav-item">
-          <button class="nav-link active text-white" data-bs-toggle="pill" data-bs-target="#tab-home">Início</button>
+          <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-home">Início</button>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">O Clube</a>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">O Clube</a>
           <ul class="dropdown-menu shadow">
             <li><button class="dropdown-item" data-bs-toggle="pill" data-bs-target="#tab-historia">História</button></li>
             <li><button class="dropdown-item" data-bs-toggle="pill" data-bs-target="#tab-idolos">Ídolos</button></li>
             <li><hr class="dropdown-divider"></li>
             <li><button class="dropdown-item" id="tab-titulos-btn" data-bs-toggle="pill" data-bs-target="#tab-titulos">Títulos</button></li>
-    <li><hr class="dropdown-divider"></li>
+            <li><hr class="dropdown-divider"></li>
             <li><button class="dropdown-item" data-bs-toggle="pill" data-bs-target="#tab-laranjeiras">Laranjeiras</button></li>
           </ul>
         </li>
         <li class="nav-item">
-    <button class="nav-link text-white" data-bs-toggle="pill" data-bs-target="#tab-noticias">Notícias</button>
-</li>
-       <li class="nav-item">
-    <button class="nav-link text-white" data-bs-toggle="pill" data-bs-target="#tab-loja">Loja</button>
-</li>
+          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-noticias">Notícias</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-loja">Loja</button>
+        </li>
       </ul>
-      <div class="d-flex">
+      <div class="d-flex align-items-center gap-2">
         <a href="#" class="btn btn-socio fw-bold px-4">SÓCIO FUTEBOL</a>
+        <!-- ✅ BOTÃO DE TEMA -->
+        <button id="btn-tema" title="Alternar tema" aria-label="Alternar entre modo claro e escuro">🌙</button>
       </div>
     </div>
   </div>
 </nav>
 
+<!-- ✅ SCRIPT DO TOGGLE DE TEMA -->
 <script>
-window.alert('Olá seja bem vindo ao site do melhor time nacional!!');
-window.confirm('Você está ciente do conteúdo em seguida?');
+(function() {
+  var btnTema = document.getElementById('btn-tema');
+  var html = document.documentElement;
 
-var nome = window.prompt('Qual é o seu nome?');
-document.write(`Olá, ${nome}! Veja as informações do Fluminense abaixo.`);
+  function getTema() {
+    return localStorage.getItem('flu-tema') || 'escuro';
+  }
 
+  function aplicarTema(tema) {
+    if (tema === 'claro') {
+      html.setAttribute('data-tema', 'claro');
+      btnTema.textContent = '☀️';
+      btnTema.title = 'Mudar para modo escuro';
+    } else {
+      html.removeAttribute('data-tema');
+      btnTema.textContent = '🌙';
+      btnTema.title = 'Mudar para modo claro';
+    }
+    localStorage.setItem('flu-tema', tema);
+  }
+
+  // Aplica o tema salvo ao carregar
+  aplicarTema(getTema());
+
+  btnTema.addEventListener('click', function() {
+    var atual = getTema();
+    aplicarTema(atual === 'escuro' ? 'claro' : 'escuro');
+  });
+})();
 </script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Seleciona o botão que está dentro do Card
-    const btnSalaTrofeus = document.querySelector('[data-bs-target="#tab-titulos"]:not(.dropdown-item)');
-    
-    // Seleciona o gatilho oficial da aba no menu
-    const gatilhoAbaTitulos = document.querySelector('#tab-titulos-btn');
-
-    if (btnSalaTrofeus && gatilhoAbaTitulos) {
-        btnSalaTrofeus.addEventListener('click', function() {
-            // Cria a instância do Bootstrap Tab e mostra a aba
-            const tab = new bootstrap.Tab(gatilhoAbaTitulos);
-            tab.show();
-            
-            // Opcional: Rola a página para o topo para ver o conteúdo novo
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
+  const btnSalaTrofeus = document.querySelector('[data-bs-target="#tab-titulos"]:not(.dropdown-item)');
+  const gatilhoAbaTitulos = document.querySelector('#tab-titulos-btn');
+  if (btnSalaTrofeus && gatilhoAbaTitulos) {
+    btnSalaTrofeus.addEventListener('click', function() {
+      new bootstrap.Tab(gatilhoAbaTitulos).show();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 });
 </script>
 
+<!-- ============================================================
+     CONTEÚDO PRINCIPAL
+     ============================================================ -->
 <main class="container my-5">
-    <div class="tab-content" id="pills-tabContent">
-        
-        <!-- ABA 1: INÍCIO (PÁGINA PRINCIPAL) -->
-        <div class="tab-pane fade show active" id="tab-home" role="tabpanel">
-            <div class="text-center mb-5">
-                <h1 class="display-4 fw-bold titulo-principal">Bem-vindo ao Portal Tricolor</h1>
-                <div class="divider"></div>
-                <p class="lead mt-3">O clube que nasceu para brilhar e orgulhar o Brasil.</p>
+  <div class="tab-content" id="pills-tabContent">
+
+    <!-- ── ABA: INÍCIO ─────────────────────────────────────── -->
+    <div class="tab-pane fade show active" id="tab-home" role="tabpanel">
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold titulo-principal">Bem-vindo ao Portal Tricolor</h1>
+        <div class="divider"></div>
+        <p class="lead mt-3">O clube que nasceu para brilhar e orgulhar o Brasil.</p>
+      </div>
+
+      <section class="row justify-content-center mb-5">
+        <div class="col-lg-12">
+          <div class="position-relative overflow-hidden rounded shadow-lg">
+            <img src="Image/torcida do fluminense.jpg" alt="Torcida Tricolor" class="img-fluid w-100" style="max-height:500px;object-fit:cover;filter:brightness(0.55);">
+            <div class="position-absolute top-50 start-50 translate-middle text-white text-center w-100 px-3">
+              <h2 class="display-3 fw-bold text-uppercase">Vence o Fluminense!</h2>
+              <p class="fs-4 d-none d-md-block">A força de uma torcida que nunca se rende.</p>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <section class="row justify-content-center mb-5">
-                <div class="col-lg-12">
-                    <div class="position-relative overflow-hidden rounded shadow-lg">
-                        <img src="Image/torcida do fluminense.jpg" alt="Torcida Tricolor" class="img-fluid w-100" style="max-height: 500px; object-fit: cover; filter: brightness(0.6);">
-                        <div class="position-absolute top-50 start-50 translate-middle text-white text-center w-100 px-3">
-                            <h2 class="display-3 fw-bold text-uppercase">Vence o Fluminense!</h2>
-                            <p class="fs-4 d-none d-md-block">A força de uma torcida que nunca se rende.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <section class="row g-5 py-4">
+        <div class="col-md-6">
+          <h3 class="fw-bold">Fidalguia e Tradição</h3>
+          <p class="texto-flu">
+            Desde 1902, o Fluminense Football Club carrega o título de "O Clube de Todos". Localizado nas Laranjeiras,
+            o Tricolor moldou a identidade do futebol carioca. Ser tricolor é entender que elegância e raça caminham juntas.
+          </p>
+        </div>
+        <div class="col-md-6">
+          <h3 class="fw-bold">O Berço de Xerém</h3>
+          <p class="texto-flu">
+            Referência mundial na formação de atletas, o Fluminense orgulha-se de "fazer em casa" os seus craques.
+            Trabalho de excelência que mantém viva a chama da renovação e do futebol bem jogado.
+          </p>
+        </div>
+      </section>
 
+      <section class="row g-4 mt-2">
 
-            <section class="row g-5 py-4">
-                <div class="col-md-6">
-                    <h3 class="fw-bold" style="color: #85283D;">Fidalguia e Tradição</h3>
-                    <p class="texto-flu">
-                        Desde 1902, o Fluminense Football Club carrega o título de "O Clube de Todos". Localizado nas Laranjeiras, 
-                        o Tricolor moldou a identidade do futebol carioca. Ser tricolor é entender que elegância e raça caminham juntas.
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <h3 class="fw-bold" style="color: #006437;">O Berço de Xerém</h3>
-                    <p class="texto-flu">
-                        Referência mundial na formação de atletas, o Fluminense orgulha-se de "fazer em casa" os seus craques. 
-                        Trabalho de excelência que mantém viva a chama da renovação e do futebol bem jogado.
-                    </p>
-                </div>
-            </section>
-
-            <section class="row g-4 mt-2">
-               <div class="col-md-4">
-    <div class="card h-100 shadow-sm border-0 overflow-hidden" style="border: 2px solid #006437 !important;">
-        <!-- Imagem Gigante e Chamativa -->
-        <div class="position-relative">
-            <img src="Image/trofeus.jpg" class="card-img-top" alt="Troféus do Fluminense" style="height: 250px; object-fit: cover; filter: brightness(0.9);">
-            <div class="position-absolute bottom-0 start-50 translate-middle-x mb-2">
+        <!-- Card Troféus -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm overflow-hidden">
+            <div class="position-relative">
+              <img src="Image/trofeus.jpg" class="card-img-top" alt="Troféus do Fluminense" style="height:250px;object-fit:cover;filter:brightness(0.85);">
+              <div class="position-absolute bottom-0 start-50 translate-middle-x mb-2">
                 <span class="badge bg-success shadow">GALERIA REAL</span>
+              </div>
             </div>
-        </div>
-        
-        <div class="card-body text-center d-flex flex-column">
-            <h4 class="fw-bold mt-2" style="color: #85283D;">Troféus</h4>
-            <p class="small text-muted flex-grow-1">
-                Explore de perto a Glória Eterna de 2023 e toda a nossa história de conquistas.
-            </p>
-            <!-- Botão que leva para a aba de títulos com as fotos individuais -->
-            <button class="btn btn-socio w-100 fw-bold py-2" data-bs-toggle="pill" data-bs-target="#tab-titulos">
+            <div class="card-body text-center d-flex flex-column">
+              <h4 class="fw-bold mt-2">Troféus</h4>
+              <p class="small flex-grow-1">Explore de perto a Glória Eterna de 2023 e toda a nossa história de conquistas.</p>
+              <button class="btn btn-socio w-100 fw-bold py-2" data-bs-toggle="pill" data-bs-target="#tab-titulos">
                 ENTRAR NA SALA DE TROFÉUS
-            </button>
+              </button>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
-                <div class="col-md-4">
-                    <div class="p-4 border rounded shadow-sm text-center h-100 bg-light">
-                        <h4 class="fw-bold" style="color: #006437;">Próximo Jogo</h4>
-                        <p class="small text-muted">Fique por dentro das datas dos próximos confrontos do Tricolor.</p>
-                         <iframe src="https://widget.api-futebol.com.br/render/widget_27dcaf44bbdd9e5f" 
-                style="width: 100%; border: none; transition: all 300ms ease;" 
-                id="scoreaxis-widget-9863"></iframe>
-                    </div>
-                </div>
-                <div class="col-md-4">
-    <div class="card h-100 shadow-sm border-0" style="border: 2px solid #85283D !important;">
-        <div class="card-body d-flex flex-column">
-            <h4 class="fw-bold text-center" style="color: #85283D;">Seja Sócio</h4>
-            <p class="small text-muted text-center">Faça parte da história do Fluminense.</p>
-            
-            <form id="formSocio" class="mt-2">
+
+        <!-- Card Próximo Jogo -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm text-center">
+            <div class="card-body">
+              <h4 class="fw-bold">Próximo Jogo</h4>
+              <p class="small">Fique por dentro das datas dos próximos confrontos do Tricolor.</p>
+              <iframe src="https://widget.api-futebol.com.br/render/widget_27dcaf44bbdd9e5f"
+                style="width:100%;border:none;transition:all 300ms ease;" id="scoreaxis-widget-9863"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Seja Sócio -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h4 class="fw-bold text-center">Seja Sócio</h4>
+              <p class="small text-center">Faça parte da história do Fluminense.</p>
+              <form id="formSocio" class="mt-2">
                 <div class="mb-2">
-                    <input type="text" class="form-control form-control-sm" id="nomeSocio" placeholder="Nome completo" required>
+                  <input type="text" class="form-control form-control-sm" id="nomeSocio" placeholder="Nome completo" required>
                 </div>
                 <div class="mb-2">
-                    <input type="email" class="form-control form-control-sm" id="emailSocio" placeholder="Seu melhor e-mail" required>
+                  <input type="email" class="form-control form-control-sm" id="emailSocio" placeholder="Seu melhor e-mail" required>
                 </div>
                 <div class="mb-3">
-                    <select class="form-select form-select-sm" id="planoSocio">
-                        <option selected disabled>Escolha um plano</option>
-                        <option value="guerreiro">Guerreiro</option>
-                        <option value="arquibancada">Arquibancada 100%</option>
-                        <option value="maraca">Check-in Maracanã</option>
-                    </select>
+                  <select class="form-select form-select-sm" id="planoSocio">
+                    <option selected disabled>Escolha um plano</option>
+                    <option value="guerreiro">Guerreiro</option>
+                    <option value="arquibancada">Arquibancada 100%</option>
+                    <option value="maraca">Check-in Maracanã</option>
+                  </select>
                 </div>
                 <button type="submit" class="btn btn-socio w-100 fw-bold py-2">ENVIAR INTERESSE</button>
-            </form>
-            
-            <div id="msgSucesso" class="alert alert-success mt-3 d-none" style="font-size: 0.8rem;">
+              </form>
+              <div id="msgSucesso" class="alert alert-success mt-3 d-none" style="font-size:0.8rem;">
                 Saudações Tricolores! Entraremos em contato.
+              </div>
             </div>
-        </div>
-    </div>
-</div>
-            </section>
+          </div>
         </div>
 
-        <!-- ABA 2: HISTÓRIA -->
-        <div class="tab-pane fade" id="tab-historia" role="tabpanel">
-            <h2 class="text-center fw-bold mb-4 sub-titulo">Nossa História</h2>
-            <section class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <p class="texto-flu">
-                        Fundado em 21 de julho de 1902 por Oscar Cox, o Fluminense Football Club introduziu o futebol no Rio de Janeiro. 
-                        Nas Laranjeiras, nasceu uma paixão que atravessa gerações.
-                    </p>
-                    <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden border border-2 border-secondary my-5">
-                        <video controls>
-                            <source src="Video/His. Fluminense.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-            </section>
+      </section>
+    </div>
+
+    <!-- ── ABA: HISTÓRIA ───────────────────────────────────── -->
+    <div class="tab-pane fade" id="tab-historia" role="tabpanel">
+      <h2 class="text-center fw-bold mb-4 sub-titulo">Nossa História</h2>
+      <section class="row justify-content-center">
+        <div class="col-lg-10 text-center">
+          <p class="texto-flu">
+            Fundado em 21 de julho de 1902 por Oscar Cox, o Fluminense Football Club introduziu o futebol no Rio de Janeiro.
+            Nas Laranjeiras, nasceu uma paixão que atravessa gerações.
+          </p>
+          <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden my-5">
+            <video controls>
+              <source src="Video/his.flu.mp4" type="video/mp4">
+              <track kind="subtitles" srclang="pt-BR" src="Legenda/His. Fluminense.vtt" label="portugues">
+            </video>
+          </div>
         </div>
-        
-        <div class="tab-pane fade" id="tab-titulos" role="tabpanel">
-    <div class="text-center mb-5">
-        <h2 class="fw-bold display-5" style="color: #85283D;">Galeria de Troféus</h2>
+      </section>
+    </div>
+
+    <!-- ── ABA: TÍTULOS ────────────────────────────────────── -->
+    <div class="tab-pane fade" id="tab-titulos" role="tabpanel">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold display-5 sub-titulo">Galeria de Troféus</h2>
         <div class="divider"></div>
+      </div>
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm" style="border-bottom:4px solid #006437 !important;">
+            <div class="card-body">
+              <img src="Image/flu-libertadores.jpg" alt="Libertadores" class="img-fluid mb-3" style="height:120px;object-fit:contain;">
+              <h4 class="fw-bold">Internacionais</h4>
+              <p><strong>Libertadores:</strong> 2023</p>
+              <p><strong>Recopa:</strong> 2024</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm" style="border-bottom:4px solid #85283D !important;">
+            <div class="card-body">
+              <img src="Image/brrasileirao.jpg" alt="Brasileirão" class="img-fluid mb-3" style="height:120px;object-fit:contain;">
+              <h4 class="fw-bold">Nacionais</h4>
+              <p><strong>Brasileirão:</strong> 4 Títulos</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm" style="border-bottom:4px solid #006437 !important;">
+            <div class="card-body">
+              <img src="Image/Fluminense-Campeao-Taca-Guanabara.jpg" alt="Carioca" class="img-fluid mb-3" style="height:120px;object-fit:contain;">
+              <h4 class="fw-bold">Estaduais</h4>
+              <p><strong>Carioca:</strong> 33 Títulos</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row g-4 text-center">
-        <div class="col-md-4">
-            <div class="p-4 border rounded shadow-sm h-100 bg-light border-bottom border-4" style="border-bottom-color: #006437 !important;">
-                <img src="Image/flu-libertadores.jpg" alt="Libertadores" class="img-fluid mb-3" style="height: 120px; object-fit: contain;">
-                <h4 class="fw-bold">Internacionais</h4>
-                <p><strong>Libertadores:</strong> 2023</p>
-                <p><strong>Recopa:</strong> 2024</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-4 border rounded shadow-sm h-100 bg-light border-bottom border-4" style="border-bottom-color: #85283D !important;">
-                <img src="Image/brrasileirao.jpg" alt="Brasileirão" class="img-fluid mb-3" style="height: 120px; object-fit: contain;">
-                <h4 class="fw-bold">Nacionais</h4>
-                <p><strong>Brasileirão:</strong> 4 Títulos</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-4 border rounded shadow-sm h-100 bg-light border-bottom border-4" style="border-bottom-color: #006437 !important;">
-                <img src="Image/Fluminense-Campeao-Taca-Guanabara.jpg" alt="Carioca" class="img-fluid mb-3" style="height: 120px; object-fit: contain;">
-                <h4 class="fw-bold">Estaduais</h4>
-                <p><strong>Carioca:</strong> 33 Títulos</p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="tab-pane fade" id="tab-noticias" role="tabpanel">
-    <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold" style="color: #006437;">Plantão Tricolor</h2>
-        <div class="divider mx-auto" style="width: 100px; height: 4px; background-color: #85283D;"></div>
-    </div>
-
-    <div class="row g-4">
-        <!-- Notícia 1 -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <img src="Image/Noticias/treino.jpg" class="card-img-top" alt="Treino">
-                <div class="card-body">
-                    <span class="badge bg-danger mb-2">CT CARLOS CASTILHO</span>
-                    <h5 class="card-title fw-bold">Preparação para o próximo duelo</h5>
-                    <p class="card-text text-muted small">O elenco tricolor finalizou hoje os treinamentos táticos focados na manutenção da posse de bola.</p>
-                    <a href="#" class="text-decoration-none fw-bold" style="color: #85283D;">Ler mais →</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Notícia 2 -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <img src="Image/Noticias/torcida no estadio.jpg" class="card-img-top" alt="Torcida">
-                <div class="card-body">
-                    <span class="badge bg-success mb-2">INGRESSOS</span>
-                    <h5 class="card-title fw-bold">Check-ins abertos para o clássico</h5>
-                    <p class="card-text text-muted small">Sócios já podem garantir seu lugar no Maracanã. A expectativa é de mais de 50 mil tricolores.</p>
-                    <a href="#" class="text-decoration-none fw-bold" style="color: #85283D;">Ver preços →</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Notícia 3 -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <img src="Image/Noticias/Xerém.jpg" class="card-img-top" alt="Xerém">
-                <div class="card-body">
-                    <span class="badge bg-warning text-dark mb-2">BASE</span>
-                    <h5 class="card-title fw-bold">Moleques de Xerém brilham no Sub-20</h5>
-                    <p class="card-text text-muted small">Com vitória convincente, o Fluminense avança para as semifinais do campeonato nacional da categoria.</p>
-                    <a href="#" class="text-decoration-none fw-bold" style="color: #85283D;">Detalhes da partida →</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-        <!-- ABA 3: ÍDOLOS -->
-        <div class="tab-pane fade" id="tab-idolos" role="tabpanel">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold sub-titulo display-5">Galeria de Imortais</h2>
-                <p class="text-muted">Os heróis que escreveram a história tricolor</p>
-            </div>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-                <!-- Ídolo 1 -->
-                <div class="col"><div class="card h-100 shadow-sm border-0 card-idolo">
-                    <img src="Image/ìdolos/Castilho,_1956.tif.jpg" class="card-img-top" alt="Castilho">
-                    <div class="card-body text-center"><h5 class="card-title fw-bold">Castilho</h5><p class="card-text small">O goleiro que amputou um dedo pelo Flu.</p></div>
-                </div></div>
-                <!-- Ídolo 2 -->
-                <div class="col"><div class="card h-100 shadow-sm border-0 card-idolo">
-                    <img src="Image/ìdolos/Fred_2022.jpg" class="card-img-top" alt="Fred">
-                    <div class="card-body text-center"><h5 class="card-title fw-bold">Fred</h5><p class="card-text small">O eterno capitão e maior artilheiro profissional.</p></div>
-                </div></div>
-                <!-- Ídolo 3 -->
-                <div class="col"><div class="card h-100 shadow-sm border-0 card-idolo">
-                    <img src="Image/ìdolos/Assis e Washington.jpg" class="card-img-top" alt="Assis e Washington">
-                    <div class="card-body text-center"><h5 class="card-title fw-bold">Assis e Washington</h5><p class="card-text small">O Casal 20 e os heróis dos anos 80.</p></div>
-                </div></div>
-                <!-- Ídolo 4 -->
-                <div class="col"><div class="card h-100 shadow-sm border-0 card-idolo">
-                    <img src="Image/ìdolos/Conca-fluminense_(cropped).jpg" class="card-img-top" alt="Conca">
-                    <div class="card-body text-center"><h5 class="card-title fw-bold">Conca</h5><p class="card-text small">O craque que jogou as 38 partidas em 2010.</p></div>
-                </div></div>
-                <!-- Ídolo 5 -->
-                <div class="col"><div class="card h-100 shadow-sm border-0 card-idolo">
-                    <img src="Image/ìdolos/German_Cano_Fluminense.jpg" class="card-img-top" alt="Germán Cano">
-                    <div class="card-body text-center"><h5 class="card-title fw-bold">Germán Cano</h5><p class="card-text small">Faz o L! O Rei da América de 2023.</p></div>
-                </div></div>
-                <!-- Ídolo 6 -->
-                <div class="col"><div class="card h-100 shadow-sm border-0 card-idolo">
-                    <img src="Image/ìdolos/Rivelino_(1971).tif.jpg" class="card-img-top" alt="Rivelino">
-                    <div class="card-body text-center"><h5 class="card-title fw-bold">Rivelino</h5><p class="card-text small">O Reizinho da Máquina Tricolor.</p></div>
-                </div></div>
-                <!-- Ídolo 7 -->
-                <div class="col"><div class="card h-100 shadow-sm border-0 card-idolo">
-                    <img src="Image/ìdolos/Pinheiro,_Estadio,_1954-03-13_(565).jpg" class="card-img-top" alt="Pinheiro">
-                    <div class="card-body text-center"><h5 class="card-title fw-bold">Pinheiro</h5><p class="card-text small">O xerife eterno da defesa tricolor.</p></div>
-                </div></div>
-                <!-- Ídolo 8 -->
-                <div class="col"><div class="card h-100 shadow-sm border-0 card-idolo">
-                    <img src="Image/ìdolos/2021_FIFA_Club_World_Cup_Final_-_14.jpg_(non-blurred_version)_(Thiago_Silva_em_2021).jpg" class="card-img-top" alt="Thiago Silva">
-                    <div class="card-body text-center"><h5 class="card-title fw-bold">Thiago Silva</h5><p class="card-text small">O Monstro. Orgulho de Xerém.</p></div>
-                </div></div>
-            </div>
-        </div>
-
-   
-
-        <!-- ABA 4: LARANJEIRAS -->
-       <div class="tab-pane fade" id="tab-laranjeiras" role="tabpanel">
-    <div class="text-center mb-5">
-        <h2 class="fw-bold display-5" style="color: #85283D;">Cronologia das Laranjeiras</h2>
+    <!-- ── ABA: NOTÍCIAS ──────────────────────────────────── -->
+    <div class="tab-pane fade" id="tab-noticias" role="tabpanel">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold sub-titulo">Plantão Tricolor</h2>
         <div class="divider"></div>
-        
-        <!-- Imagem de Destaque do Estádio -->
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="Image/Noticias/treino.jpg" class="card-img-top" alt="Treino">
+            <div class="card-body">
+              <span class="badge bg-danger mb-2">CT CARLOS CASTILHO</span>
+              <h5 class="card-title fw-bold">Preparação para o próximo duelo</h5>
+              <p class="card-text small">O elenco tricolor finalizou os treinamentos táticos focados na manutenção da posse de bola.</p>
+              <a href="#" class="text-decoration-none fw-bold">Ler mais →</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="Image/Noticias/torcida no estadio.jpg" class="card-img-top" alt="Torcida">
+            <div class="card-body">
+              <span class="badge bg-success mb-2">INGRESSOS</span>
+              <h5 class="card-title fw-bold">Check-ins abertos para o clássico</h5>
+              <p class="card-text small">Sócios já podem garantir seu lugar no Maracanã. A expectativa é de mais de 50 mil tricolores.</p>
+              <a href="#" class="text-decoration-none fw-bold">Ver preços →</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="Image/Noticias/Xerém.jpg" class="card-img-top" alt="Xerém">
+            <div class="card-body">
+              <span class="badge bg-warning mb-2">BASE</span>
+              <h5 class="card-title fw-bold">Moleques de Xerém brilham no Sub-20</h5>
+              <p class="card-text small">Com vitória convincente, o Fluminense avança para as semifinais do campeonato nacional da categoria.</p>
+              <a href="#" class="text-decoration-none fw-bold">Detalhes da partida →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ABA: ÍDOLOS ────────────────────────────────────── -->
+    <div class="tab-pane fade" id="tab-idolos" role="tabpanel">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold sub-titulo display-5">Galeria de Imortais</h2>
+        <p>Os heróis que escreveram a história tricolor</p>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+          <img src="Image/ìdolos/Castilho,_1956.tif.jpg" class="card-img-top" alt="Castilho">
+          <div class="card-body text-center"><h5 class="card-title fw-bold">Castilho</h5><p class="card-text small">O goleiro que amputou um dedo pelo Flu.</p></div>
+        </div></div>
+        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+          <img src="Image/ìdolos/Fred_2022.jpg" class="card-img-top" alt="Fred">
+          <div class="card-body text-center"><h5 class="card-title fw-bold">Fred</h5><p class="card-text small">O eterno capitão e maior artilheiro profissional.</p></div>
+        </div></div>
+        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+          <img src="Image/ìdolos/Assis e Washington.jpg" class="card-img-top" alt="Assis e Washington">
+          <div class="card-body text-center"><h5 class="card-title fw-bold">Assis e Washington</h5><p class="card-text small">O Casal 20 e os heróis dos anos 80.</p></div>
+        </div></div>
+        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+          <img src="Image/ìdolos/Conca-fluminense_(cropped).jpg" class="card-img-top" alt="Conca">
+          <div class="card-body text-center"><h5 class="card-title fw-bold">Conca</h5><p class="card-text small">O craque que jogou as 38 partidas em 2010.</p></div>
+        </div></div>
+        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+          <img src="Image/ìdolos/German_Cano_Fluminense.jpg" class="card-img-top" alt="Germán Cano">
+          <div class="card-body text-center"><h5 class="card-title fw-bold">Germán Cano</h5><p class="card-text small">Faz o L! O Rei da América de 2023.</p></div>
+        </div></div>
+        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+          <img src="Image/ìdolos/Rivelino_(1971).tif.jpg" class="card-img-top" alt="Rivelino">
+          <div class="card-body text-center"><h5 class="card-title fw-bold">Rivelino</h5><p class="card-text small">O Reizinho da Máquina Tricolor.</p></div>
+        </div></div>
+        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+          <img src="Image/ìdolos/Pinheiro,_Estadio,_1954-03-13_(565).jpg" class="card-img-top" alt="Pinheiro">
+          <div class="card-body text-center"><h5 class="card-title fw-bold">Pinheiro</h5><p class="card-text small">O xerife eterno da defesa tricolor.</p></div>
+        </div></div>
+        <div class="col"><div class="card h-100 shadow-sm card-idolo">
+          <img src="Image/ìdolos/2021_FIFA_Club_World_Cup_Final_-_14.jpg_(non-blurred_version)_(Thiago_Silva_em_2021).jpg" class="card-img-top" alt="Thiago Silva">
+          <div class="card-body text-center"><h5 class="card-title fw-bold">Thiago Silva</h5><p class="card-text small">O Monstro. Orgulho de Xerém.</p></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ── ABA: LARANJEIRAS ───────────────────────────────── -->
+    <div class="tab-pane fade" id="tab-laranjeiras" role="tabpanel">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold display-5 sub-titulo">Cronologia das Laranjeiras</h2>
+        <div class="divider"></div>
         <div class="my-4">
-            <img src="Image/Laranjeiras/Estádio_de_Laranjeiras_3_21_07_2018_3.jpg" alt="Estádio das Laranjeiras" class="img-fluid rounded shadow-lg border border-3" style="border-color: #006437 !important; max-height: 400px; width: 100%; object-fit: cover;">
-            <p class="text-muted mt-2 small">Vista aérea do Estádio Manoel Schwartz</p>
+          <img src="Image/Laranjeiras/Estádio_de_Laranjeiras_3_21_07_2018_3.jpg" alt="Estádio das Laranjeiras"
+            class="img-fluid rounded shadow-lg" style="max-height:400px;width:100%;object-fit:cover;border:3px solid rgba(255,215,0,0.35);">
+          <p class="mt-2 small">Vista aérea do Estádio Manoel Schwartz</p>
         </div>
-    </div>
-
-    <div class="timeline-container">
-        <!-- 1902 -->
+      </div>
+      <div class="timeline-container">
         <div class="timeline-item left">
-            <div class="timeline-dot bg-success"></div>
-            <div class="timeline-content shadow-sm">
-                <span class="badge bg-success mb-2">1902</span>
-                <h4 class="fw-bold" style="color: #85283D;">A Compra do Terreno</h4>
-                <p>O Fluminense adquire o terreno na Rua Álvaro Chaves.</p>
-            </div>
+          <div class="timeline-dot bg-success"></div>
+          <div class="timeline-content shadow-sm">
+            <span class="badge bg-success mb-2">1902</span>
+            <h4 class="fw-bold">A Compra do Terreno</h4>
+            <p>O Fluminense adquire o terreno na Rua Álvaro Chaves.</p>
+          </div>
         </div>
-
-        <!-- 1914 com Imagem Pequena -->
         <div class="timeline-item right">
-            <div class="timeline-dot bg-danger"></div>
-            <div class="timeline-content shadow-sm">
-                <span class="badge bg-danger mb-2">1914</span>
-                <h4 class="fw-bold" style="color: #85283D;">Berço da Seleção</h4>
-                <img src="Image/Laranjeiras/Primeiro jogo seleção Laranjeiras.jpeg" class="img-fluid rounded mb-2" alt="Brasil x Exeter City" style="max-height: 150px;">
-                <p>O estádio recebe o primeiro jogo da história da Seleção Brasileira: Brasil 2x0 Exeter City.</p>
-            </div>
+          <div class="timeline-dot bg-danger"></div>
+          <div class="timeline-content shadow-sm">
+            <span class="badge bg-danger mb-2">1914</span>
+            <h4 class="fw-bold">Berço da Seleção</h4>
+            <img src="Image/Laranjeiras/Primeiro jogo seleção Laranjeiras.jpeg" class="img-fluid rounded mb-2" alt="Brasil x Exeter City" style="max-height:150px;">
+            <p>O estádio recebe o primeiro jogo da história da Seleção Brasileira: Brasil 2x0 Exeter City.</p>
+          </div>
         </div>
-
-        <!-- 1919 -->
         <div class="timeline-item left">
-            <div class="timeline-dot bg-success"></div>
-            <div class="timeline-content shadow-sm">
-                <span class="badge bg-success mb-2">1919</span>
-                <h4 class="fw-bold" style="color: #85283D;">Sul-Americano</h4>
-                <p>Inauguração do estádio de cimento. O Brasil sagra-se campeão pela primeira vez.</p>
-            </div>
+          <div class="timeline-dot bg-success"></div>
+          <div class="timeline-content shadow-sm">
+            <span class="badge bg-success mb-2">1919</span>
+            <h4 class="fw-bold">Sul-Americano</h4>
+            <p>Inauguração do estádio de cimento. O Brasil sagra-se campeão pela primeira vez.</p>
+          </div>
         </div>
-
-        <!-- Atualidade -->
         <div class="timeline-item right">
-            <div class="timeline-dot bg-danger"></div>
-            <div class="timeline-content shadow-sm">
-                <span class="badge bg-danger mb-2">Hoje</span>
-                <h4 class="fw-bold" style="color: #85283D;">Patrimônio Vivo</h4>
-                <p>Sede social e palco das categorias de base e futebol feminino.</p>
-            </div>
+          <div class="timeline-dot bg-danger"></div>
+          <div class="timeline-content shadow-sm">
+            <span class="badge bg-danger mb-2">Hoje</span>
+            <h4 class="fw-bold">Patrimônio Vivo</h4>
+            <p>Sede social e palco das categorias de base e futebol feminino.</p>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
     </div>
 
-     <div class="tab-pane fade" id="tab-loja" role="tabpanel">
-    <div class="container text-center py-5">
-        <!-- Imagem do Jogador Comemorando -->
+    <!-- ── ABA: LOJA ──────────────────────────────────────── -->
+    <div class="tab-pane fade" id="tab-loja" role="tabpanel">
+      <div class="container text-center py-5">
         <div class="mb-4">
-            <img src="Image/Noticias/german-cano-atacante-do-fluminense-1666729272594_v2_1920x1280.jpg" 
-                 alt="Sucesso de Vendas" 
-                 class="img-fluid rounded-circle shadow-lg" 
-                 style="width: 280px; height: 280px; object-fit: cover; border: 6px solid #006437;">
+          <img src="Image/Noticias/german-cano-atacante-do-fluminense-1666729272594_v2_1920x1280.jpg"
+            alt="Sucesso de Vendas" class="img-fluid rounded-circle shadow-lg"
+            style="width:280px;height:280px;object-fit:cover;border:6px solid #006437;">
         </div>
-        
-        <h2 class="display-4 fw-bold" style="color: #006437;">¡ESTOQUE ZERADO!</h2>
-        <p class="fs-5 text-muted mx-auto" style="max-width: 600px;">
-            A força da nossa torcida é imparável! <br>
-            Graças ao apoio de vocês, todos os itens da loja foram vendidos. 
-            <strong>Preparem-se: o novo lote chega em breve com novidades exclusivas.</strong>
+        <h2 class="display-4 fw-bold" id="tab-loja">¡ESTOQUE ZERADO!</h2>
+        <p class="fs-5 mx-auto" style="max-width:600px;">
+          A força da nossa torcida é imparável!<br>
+          Graças ao apoio de vocês, todos os itens da loja foram vendidos.
+          <strong>Preparem-se: o novo lote chega em breve com novidades exclusivas.</strong>
         </p>
-        
         <div class="mt-4">
-            <div class="alert alert-warning d-inline-block px-4 py-2 shadow-sm" role="alert">
-                <i class="bi bi-bell-fill me-2"></i> 
-                <strong>Dica:</strong> Sócios têm 24h de pré-venda garantida!
-            </div>
+          <div class="alert alert-warning d-inline-block px-4 py-2 shadow-sm" role="alert">
+            <strong>Dica:</strong> Sócios têm 24h de pré-venda garantida!
+          </div>
         </div>
-
         <div class="mt-4">
-            <button class="btn btn-socio btn-lg fw-bold mt-3" id="btn-voltar-home">
-    VOLTAR PARA O PORTAL</button>
+          <button class="btn btn-socio btn-lg fw-bold mt-3" id="btn-voltar-home">VOLTAR PARA O PORTAL</button>
         </div>
+      </div>
     </div>
-    
-    <script>document.addEventListener('DOMContentLoaded', function() {
-    const btnVoltar = document.getElementById('btn-voltar-home');
-    
-    if (btnVoltar) {
-        btnVoltar.addEventListener('click', function() {
-            // 1. Localiza o botão "Início" lá no menu superior
-            const navInicio = document.querySelector('button[data-bs-target="#tab-home"]');
-            
-            // 2. Dispara o evento do Bootstrap para mostrar a aba
-            if (navInicio) {
-                const tab = new bootstrap.Tab(navInicio);
-                tab.show();
-                
-                // 3. Rola a página para o topo suavemente
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-    }
-});</script>
 
+  </div>
 </main>
 
 <footer class="bg-dark text-white text-center py-4">
-    <p class="mb-0">© 1902 - 2024 Fluminense Football Club</p>
+  <p class="mb-0">© 1902 - 2024 Fluminense Football Club</p>
 </footer>
 
 <script>
-  // Som ao clicar no escudo //
   document.querySelector('.navbar-brand').addEventListener('click', function() {
     const hino = document.getElementById('hinoFlu');
     hino.currentTime = 0;
     hino.play().catch(e => console.log("Hino pronto para tocar"));
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const btnVoltar = document.getElementById('btn-voltar-home');
+    if (btnVoltar) {
+      btnVoltar.addEventListener('click', function() {
+        const navInicio = document.querySelector('button[data-bs-target="#tab-home"]');
+        if (navInicio) { new bootstrap.Tab(navInicio).show(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      });
+    }
   });
 </script>
 
