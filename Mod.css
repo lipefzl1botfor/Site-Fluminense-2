@@ -129,11 +129,12 @@ a:hover { color: var(--flu-verde); }
 
 #escudoFLU {
   transition: transform 0.2s;
-  filter: drop-shadow(0 0 5px rgba(255,215,0,0.35));
+  filter: drop-shadow(0 0 6px rgba(255,215,0,0.5));
+  background: transparent !important;
 }
 #escudoFLU:hover {
   transform: scale(1.15);
-  filter: drop-shadow(0 0 10px rgba(255,215,0,0.7));
+  filter: drop-shadow(0 0 12px rgba(255,215,0,0.8));
 }
 
 /* ============================================
